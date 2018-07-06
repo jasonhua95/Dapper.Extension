@@ -4,6 +4,9 @@ using System.Data.SqlClient;
 
 namespace Dapper.Extension
 {
+	/// <summary>
+	/// 数据库的链接类(sql server),将来数据库切换只用修改这里(SqlConnection),修改它就可以了
+	/// </summary>
 	public class ConnectionFactory
 	{
 		public static void InitConnectionString()

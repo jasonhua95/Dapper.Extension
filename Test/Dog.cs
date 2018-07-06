@@ -1,21 +1,15 @@
 ﻿using Dapper.Contrib.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Test
 {
 	[Table("Dogs")]
 	public class Dog
 	{
-		public int? Age { get; set; }
-		[Key]
+		//自增ID用[Key],不是自增的用ExplicitKey
+		[ExplicitKey]
 		public string Id { get; set; }
 		public string Name { get; set; }
+		public int? Age { get; set; }
 		public float? Weight { get; set; }
-
-		//public int IgnoredProperty { get { return 1; } }
 	}
 }

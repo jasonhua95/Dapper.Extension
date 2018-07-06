@@ -1,8 +1,10 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 
 namespace Dapper.Extension
 {
+	/// <summary>
+	/// 事务的处理
+	/// </summary>
 	public class TransactedConnection : IDbConnection
 	{
 		private IDbConnection _conn;

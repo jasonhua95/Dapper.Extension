@@ -13,6 +13,14 @@ namespace Dapper.Extension
 		long Insert<T>(T t) where T : class;
 
 		/// <summary>
+		/// 插入数据
+		/// </summary>
+		/// <typeparam name="T">实体类型</typeparam>
+		/// <param name="list"></param>
+		/// <returns>id</returns>
+		long Insert<T>(IEnumerable<T> list) where T : class;
+
+		/// <summary>
 		/// 更新数据
 		/// </summary>
 		/// <typeparam name="T">实体类型</typeparam>
@@ -21,12 +29,28 @@ namespace Dapper.Extension
 		bool Update<T>(T t) where T : class;
 
 		/// <summary>
+		/// 更新数据
+		/// </summary>
+		/// <typeparam name="T">实体类型</typeparam>
+		/// <param name="list"></param>
+		/// <returns>成功：失败</returns>
+		bool Update<T>(IEnumerable<T> list) where T : class;
+
+		/// <summary>
 		/// 删除数据
 		/// </summary>
 		/// <typeparam name="T">实体类型</typeparam>
 		/// <param name="id"></param>
 		/// <returns></returns>
 		bool Delete<T>(dynamic id) where T : class;
+
+		/// <summary>
+		/// 删除数据
+		/// </summary>
+		/// <typeparam name="T">实体类型</typeparam>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		bool Delete<T>(IEnumerable<dynamic> idList) where T : class;
 
 		/// <summary>
 		/// 获取实体数据

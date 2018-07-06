@@ -1,12 +1,6 @@
 ﻿using Dapper;
-using Dapper.Contrib.Extensions;
 using Dapper.Extension;
 using System;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Globalization;
-using System.Threading;
 
 namespace Test
 {
@@ -16,64 +10,47 @@ namespace Test
 		{
 			Console.WriteLine("项目启动开始");
 			ConnectionFactory.InitConnectionString();
-			InsertTest();
-			//try {
-			//	int i = 0;
-			//	while (i < 1000)
-			//	{
-			//		//TestBase test = new TestBase();
-			//		//using (SqlConnection sql = new SqlConnection(TestBase.ConnectionString)) {
-			//		//	//var users = sql.Query("SELECT TOP 1000 [id],[name] ,[age] FROM [Test].[dbo].[t_user]");
-			//		//	//sql.Open();
-			//		//	//using (var transaction = sql.BeginTransaction())
-			//		//	//{
-			//		//	//	sql.Execute("insert into [t_user] ([id], [name],[age]) values (1, 'ABC',12);", transaction: transaction);
-			//		//	//	transaction.Commit();
-			//		//	//}
-
-			//		//	TransactedConnection conn = new TransactedConnection(sql);
-			//		//	conn.Execute("insert into [t_user] ([id], [name],[age]) values (1, 'ABC',12);");
-			//		//	conn.Execute("insert into [t_user] ([id], [name],[age]) values (1, 'ABC',12);");
-			//		//	conn.Execute("insert into [t_user] ([id], [name],[age]) values (1, 'ABC',12);");
-			//		//	//conn.Commit();
-			//		//}
-
-			//		//using (IDbConnection conn = ConnectionFactory.CreateConnection())
-			//		//{
-			//		//	var users = conn.Query("SELECT TOP 1000 [id],[name] ,[age] FROM [Test].[dbo].[t_user]");
-			//		//}
-
-			//		using (var conn = ConnectionFactory.CreateTransactedConnection())
-			//		{
-			//			conn.Execute("insert into [t_user] ([id], [name],[age]) values (1, 'ABC',12);");
-			//			conn.Execute("insert into [t_user] ([id], [name],[age]) values (1, 'ABC',12);");
-			//			conn.Execute("insert into [t_user] ([id], [name],[age]) values (1, 'ABC',12);");
-			//			conn.Commit();
-			//		}
-
-			//		i++;
-			//	}
-			//} catch (Exception ex) {
-			//	Console.WriteLine("项目异常");
-			//}
+			Test();
 			Console.WriteLine("项目启动结束");
 			Console.Read();
 		}
 
-		private static void InsertTest() {
-			try {
-				IDBManager db = new DBManager();
-				var d = new Dog { Id = Guid.NewGuid().ToString(), Name = "测试1",Age=2,Weight=10 };
+		private static void Test() {
+			IDBManager db = new DBManager();
+			var dog = new Dog { Id = Guid.NewGuid().ToString(), Name = "小红", Age = 2, Weight = 10 };
+			var id = db.Insert(dog);
 
-				var dog = db.Insert<Dog>(d);
-				//db.Execute("insert into Dogs(Id,Name) values(@Id,@Name)", new Dog { Id = Guid.NewGuid().ToString(), Name = "测试1" });
+			var getDog = db.GetById<Dog>(dog.Id);
 
-			} catch (Exception ex) {
-				var test = ex.ToString();
+			dog.Name = "红红";
+			db.Update(dog);
+
+			var dogList = db.GetAll<Dog>();
+
+			var query = db.Query<Dog>("select Id,Name,Age,Weight from Dogs;");
+
+			var execu = db.Execute("update Dogs set Age=3 where Age is null");
+
+			//复杂的操作，.智能提示，会有很多的方法
+			using (var conn = ConnectionFactory.CreateConnection())
+			{
+				conn.Query("select 1");
+			}
+			//事务，智能提示，会有很多的方法
+			using (var conn = ConnectionFactory.CreateTransactedConnection())
+			{
+				try {
+					conn.Query("select 1");
+					conn.Commit();
+				} catch (Exception ex) {
+					conn.Rollback();
+				}
 			}
 
-			
+			//其他复杂的操作请参照一下网站
+			//https://github.com/StackExchange/Dapper
 		}
+
 	}
 
 }
