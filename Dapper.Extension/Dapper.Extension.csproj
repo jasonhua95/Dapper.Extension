@@ -50,9 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="ConnectionFactory.cs" />
-    <Compile Include="TranDBManager.cs" />
     <Compile Include="DBManager.cs" />
     <Compile Include="IDBManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

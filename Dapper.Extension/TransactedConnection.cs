@@ -34,7 +34,8 @@ namespace Dapper.Extension
 
 		public IDbTransaction BeginTransaction(IsolationLevel il)
 		{
-			throw new NotImplementedException();
+			_level = il;
+			return _tran;
 		}
 
 		public IDbTransaction BeginTransaction() => _tran;
