@@ -17,7 +17,8 @@ namespace Test
 
 		private static void Test() {
 			IDBManager db = new DBManager();
-			var dog = new Dog { Id = Guid.NewGuid().ToString(), Name = "小红", Age = 2, Weight = 10 };
+			long idLong = Math.Abs(System.Guid.NewGuid().GetHashCode());
+			var dog = new Dog { Id = idLong, Name = "小红", Age = 2, Weight = 10 };
 			var id = db.Insert(dog);
 
 			var getDog = db.GetById<Dog>(dog.Id);

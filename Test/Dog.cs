@@ -7,7 +7,7 @@ namespace Test
 	{
 		//自增ID用[Key],不是自增的用ExplicitKey
 		[ExplicitKey]
-		public string Id { get; set; }
+		public long Id { get; set; }
 		public string Name { get; set; }
 		public int? Age { get; set; }
 		public float? Weight { get; set; }
