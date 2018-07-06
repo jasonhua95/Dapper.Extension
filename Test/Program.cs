@@ -17,7 +17,7 @@ namespace Test
 
 		private static void Test() {
 			IDBManager db = new DBManager();
-			long idLong = Math.Abs(System.Guid.NewGuid().GetHashCode());
+			long idLong = DateTime.Now.Ticks;
 			var dog = new Dog { Id = idLong, Name = "小红", Age = 2, Weight = 10 };
 			var id = db.Insert(dog);
 
